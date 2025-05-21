@@ -10,7 +10,7 @@ use App\Http\Controllers\UsuariosController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
 
 // Route::get('/categorias', [CategoriaController::class,'index']);
@@ -19,3 +19,5 @@ Route:: resource('ciudades', CiudadesController::class);
 Route:: resource('comentarios', ComentariosController::class);
 Route:: resource('productos', ProductosController::class);
 Route:: resource('usuarios', UsuariosController::class);
+
+

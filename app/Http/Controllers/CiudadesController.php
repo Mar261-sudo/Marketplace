@@ -14,7 +14,8 @@ class CiudadesController extends Controller
      */
     public function index()
     {
-        echo'esto es el index de ciudades';
+        $data = Ciudad::all();
+        return view('ciudades.index', compact ('data'));
     }
 
     /**

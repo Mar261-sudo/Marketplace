@@ -13,7 +13,8 @@ class ComentariosController extends Controller
      */
     public function index()
     {
-                echo'esto es el index de comentarios';
+             $data = Comentario::all();
+        return view('comentarios.index', compact('data'));
 
     }
 

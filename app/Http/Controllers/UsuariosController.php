@@ -14,7 +14,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-                echo'esto es el index de usuarios';
+         $data = Usuario::all();
+        return view('usuarios.index', compact('data'));
 
     }
 
