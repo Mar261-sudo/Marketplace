@@ -31,7 +31,14 @@ class CiudadesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ciudades = new Ciudad();
+        
+        $ciudades->nombre = $request->nombre;
+        $ciudades->estado = $request->estado;
+        
+        $ciudades->save();
+
+     return redirect('ciudades');
     }
 
     /**

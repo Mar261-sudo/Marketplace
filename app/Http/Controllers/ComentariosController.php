@@ -31,7 +31,16 @@ class ComentariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comentarios = new Comentario();
+        
+        $comentarios->descripcion = $request->descripcion;
+        $comentarios->valoracion = $request->valoracion;
+        $comentarios->estado = $request->estado;
+        $comentarios->usuario_id = $request->usuario_id;
+        $comentarios->producto_id = $request->producto_id;
+        $comentarios->save();
+
+     return redirect('comentarios');
     }
 
     /**

@@ -31,7 +31,20 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productos = new Producto();
+        
+        $productos->nombre = $request->nombre;
+        $productos->slug = $request->slug;
+        $productos->descripcion = $request->descripcion;
+        $productos->valor = $request->valor;
+        $productos->estado = $request->estado;
+        $productos->estado_producto = $request->estado_producto;
+        $productos->categoria_id = $request->categoria_id;
+        $productos->usuario_id = $request->usuario_id;
+        $productos->ciudad_id = $request->ciudad_id;
+        $productos->save();
+
+     return redirect('productos');
     }
 
     /**

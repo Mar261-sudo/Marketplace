@@ -32,7 +32,18 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuarios = new Usuario();
+        
+        $usuarios->nombre = $request->nombre;
+        $usuarios->movil = $request->movil;
+        $usuarios->email = $request->email;
+        $usuarios->password = $request->password;
+        $usuarios->rol = $request->rol;
+        $usuarios->estado = $request->estado;
+        $usuarios->ciudad_id = $request->ciudad_id;
+        $usuarios->save();
+
+     return redirect('usuarios');
     }
 
     /**
