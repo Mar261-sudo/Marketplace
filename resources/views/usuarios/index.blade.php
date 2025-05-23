@@ -5,7 +5,7 @@
 @section('header')
    <div class="col">
                 <h2 class="page-title">
-               $usuario
+               Usuario
                </h2>
               </div>
               <!-- Page title actions -->
@@ -54,3 +54,72 @@
       
     </body></html>
 @stop
+@section('modals')
+<div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="usuario-form" action="{{ route('usuarios.store') }}" method="POST">
+                    @csrf
+
+                    <div class="row">
+                        <!-- Campo Nombre -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" required>
+                        </div>
+
+                        <!-- Campo Móvil -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Móvil</label>
+                            <input type="tel" class="form-control" name="movil" required>
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+
+                        <!-- Campo Password -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+
+                        <!-- Campo Rol (CORREGIDO) -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Rol</label>
+                            <input type="rol" class="form-control" name="rol" required>
+                        </div>
+
+                        <!-- Campo Estado -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Estado</label>
+                           <input type="estado" class="form-control" name="estado" required>
+                        </div>
+
+                        <!-- Campo Ciudad ID -->
+                        <div ccol-md-6 mb-3">
+                            <label class="form-label">Ciudad ID</label>
+                            <input type="number" class="form-control" name="ciudad_id" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary ms-auto" form="usuario-form">
+                    Guardar Usuario
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -50,3 +50,71 @@
       
     </body></html>
 @stop
+
+@section('modals')
+  <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nuevo Comentario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+          <form id="categoria-form" action="{{ url('comentarios') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="row">
+              <div class="col-lg-12 mb-3">
+                <div>
+                  <label class="form-label">Descripción</label>
+                  <textarea class="form-control" rows="3" name="descripcion" required></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class="form-label">Valoración</label>
+                  <input type="number" class="form-control" name="valoracion" min="1" max="5" required>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class="form-label">Estado</label>
+                  <select class="form-select" name="estado" required>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class="form-label">Usuario ID</label>
+                  <input type="number" class="form-control" name="usuario_id" required>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class="form-label">Producto ID</label>
+                  <input type="number" class="form-control" name="producto_id" required>
+                </div>
+              </div>
+            </div>
+          </form>
+            
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary ms-auto" id="btn-modal" form="categoria-form"> 
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+@stop

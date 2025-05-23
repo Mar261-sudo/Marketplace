@@ -37,6 +37,7 @@ class ProductosController extends Controller
         $productos->slug = $request->slug;
         $productos->descripcion = $request->descripcion;
         $productos->valor = $request->valor;
+        $productos ->imagen = $request-> imagen;
         $productos->estado = $request->estado;
         $productos->estado_producto = $request->estado_producto;
         $productos->categoria_id = $request->categoria_id;
