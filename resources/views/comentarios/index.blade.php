@@ -83,26 +83,26 @@
                 <div>
                   <label class="form-label">Estado</label>
                   <select class="form-select" name="estado" required>
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
-                  </select>
-                </div>
-              </div>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
 
-              <div class="col-md-6 mb-3">
-                <div>
-                  <label class="form-label">Usuario ID</label>
-                  <input type="number" class="form-control" name="usuario_id" required>
                 </div>
               </div>
+              <select class="form-select" name="usuario_id" required>
+                <option value="">Seleccionar Usuario</option>
+                @foreach($usuario as $u)
+                    <option value="{{ $u->id }}">{{ $u->nombre }}</option>
+                @endforeach
+            </select>
 
-              <div class="col-md-6 mb-3">
-                <div>
-                  <label class="form-label">Producto ID</label>
-                  <input type="number" class="form-control" name="producto_id" required>
-                </div>
-              </div>
-            </div>
+            <select class="form-select" name="producto_id" required>
+                <option value="">Seleccionar Producto</option>
+                @foreach($producto as $p)
+                    <option value="{{ $p->id }}">{{ $p->nombre }}</option>
+                @endforeach
+            </select>
+
           </form>
             
           </div>

@@ -1,7 +1,6 @@
 @extends('layout')
 
 
-
 @section('header')
    <div class="col">
                 <h2 class="page-title">
@@ -68,7 +67,7 @@
           </div>
           <div class="modal-body">
 
-          <form id = "categoria-form" action= "{{ url('categorias') }}" method ="POST" enctype ="multipart/form-data">
+          <form id = "producto-form" action= "{{ url('productos') }}" method ="POST" enctype ="multipart/form-data">
 
             @csrf
 
@@ -83,6 +82,69 @@
                   <input type="text"class = "form-control" name ="slug" id="slug">
                 </div>
               </div>
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class ="form-label">Valor</label>
+                  <input type="text"class = "form-control" name ="valor" id="valor">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div>
+                  <label class ="form-label">Imagen</label>
+                  <input type="file"class ="form-control" name ="imagen" accept="image/*">
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class ="form-label">Estado Producto</label>
+                  <select name = "estado_producto" class = "form-control">
+                    <option value= "nuevo"> Nuevo</option>
+                    <option value= "poco uso"> Poco uso</option>
+                    <option value= "usado"> Usado</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div>
+                  <label class ="form-label">Estado</label>
+                  <select name = "estado" class = "form-control">
+                    <option value= "1"> Activo</option>
+                    <option value= "0"> Inactivo</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class = "col-md-6 mb-3">
+               <label class="form-label">Categorias</label>
+               <select name="categoria_id" class="form-control">
+                  <option value="">Seleccionar Categoría</option>
+                  @foreach($categoria as $categoria)
+                      <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                  @endforeach
+              </select>                 
+              </div>
+              <div class = "col-md-6 mb-3">
+               <label class="form-label">Usuario</label>
+               <select name="usuario_id" class="form-control">
+                  <option value="">Seleccionar Usuario</option>
+                    @foreach($usuario as $usuario)
+                        <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                    @endforeach
+              </select>
+              </div>
+              <div class = "col-md-6 mb-3">
+               <label class="form-label">Ciudad</label>
+               <select name="ciudad_id" class="form-control">
+                  <option value="">Seleccionar Ciudad</option>
+                  @foreach($ciudad as $ciudad)
+                      <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
+                  @endforeach
+                </select>
+
+              </select>
+              </div>
+
 
               <div class="col-lg-12">
                 <div>
@@ -98,7 +160,7 @@
             <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
               Cancelar
             </a>
-            <button type ="submit" class= "btn btn-primary ms-auto" id= "btn-modal" form="categoria-form"> 
+            <button type ="submit" class= "btn btn-primary ms-auto" id= "btn-modal" form="producto-form"> 
               Enviar
             </button>
           </div>

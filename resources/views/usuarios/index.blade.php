@@ -39,7 +39,7 @@
             </tr>
         </thead>  
         <tbody>
-          @foreach ($data as $usuarios)
+          @foreach ($usuarios as $usuarios)
               <tr>
                 <td>{{$usuarios ->nombre}}</td>
                 <td>{{$usuarios->movil}}</td>
@@ -104,9 +104,16 @@
                         </div>
 
                         <!-- Campo Ciudad ID -->
-                        <div ccol-md-6 mb-3">
+                        <div class = "col-md-6 mb-3">
                             <label class="form-label">Ciudad ID</label>
-                            <input type="number" class="form-control" name="ciudad_id" required>
+                            <select name = "ciudad_id" class = "form- control" required>
+                                <option value = "">Selecionar Ciudad:</option>
+                                @foreach($ciudades as $ciudad)
+                                <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
+                                @endforeach
+
+                            </select>
+                            
                         </div>
                     </div>
                 </form>
@@ -123,3 +130,4 @@
     </div>
 </div>
 @endsection
+

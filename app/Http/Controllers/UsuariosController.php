@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-
 use App\Models\Usuario;
+use App\Models\Ciudad;
 
 class UsuariosController extends Controller
+
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $data = Usuario::all();
-        return view('usuarios.index', compact('data'));
+         $usuarios = Usuario::with('ciudad')->get ();
+         $ciudades = Ciudad::all();
+ 
+        return view('usuarios.index', compact('usuarios','ciudades'));
 
+       
     }
 
     /**

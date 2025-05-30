@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Producto;
+use App\Models\Categoria;
+use App\Models\Ciudad;
+use App\Models\Usuario;
 
 class ProductosController extends Controller
 {
@@ -15,7 +18,10 @@ class ProductosController extends Controller
     {   
 
         $data = Producto::all();
-        return view('productos.index', compact('data'));
+        $categoria = Categoria::all();
+        $ciudad = Ciudad::all();
+        $usuario = usuario::all();
+        return view('productos.index', compact('data','categoria','ciudad','usuario'));
     }
 
     /**

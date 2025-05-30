@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
+    public function ciudad() {
+        return $this->belongsTo(Ciudad::class);
+    }
+
+
+
     use HasFactory;
     protected $fillable =['nombre','movil','email','password','rol','estado','ciudad_id'];
 
