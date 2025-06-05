@@ -2,6 +2,8 @@
 
 
 @section('styles')
+  <link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
+
   <style>
     .error{
       color : red;
@@ -146,6 +148,7 @@
 @stop
 
 @section('scripts')
+    <script src="{{ url('js/lightbox.min') }}"></script>
 <script>
   document.getElementById('nombre').addEventListener('input', function() {
     const nombre = this.value;

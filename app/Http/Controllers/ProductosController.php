@@ -74,7 +74,7 @@ class ProductosController extends Controller
         if($request->hasFile('imagen')){
             $file = $request -> file('imagen');
             $filename = time() . '.'. $file ->getClientOriginalExtension();
-            $file -> move(public_path('img/Productos'), $filename);
+            $file -> move(public_path('img/Productos/'), $filename);
             $productos ->imagen = $filename;
         }else{
             $productos-> imagen = null;

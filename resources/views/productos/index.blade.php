@@ -1,5 +1,6 @@
 @extends('layout')
 @section('styles')
+
 <link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
 
   <style>
