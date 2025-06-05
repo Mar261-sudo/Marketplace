@@ -1,5 +1,13 @@
 @extends('layout')
-
+@section('styles')
+  <style>
+    .error{
+      color: red;
+      font-size: 0.875em;
+      margin-top: 10px;
+    }
+  </style>
+@stop
 
 
 @section('header')
@@ -7,9 +15,9 @@
                 <h2 class="page-title">
                Usuario
                </h2>
-              </div>
-              <!-- Page title actions -->
-              <div class="col-auto ms-auto d-print-none">
+ </div>
+ <!-- Page title actions -->
+    <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
                   <!-- <span class="d-none d-sm-inline">
                     <a href="#" class="btn">
@@ -22,8 +30,9 @@
                     Nuevo
                   </a>
                 </div>
-              </div>
+    </div>
 @stop
+
 
 @section('content')
     <table class ="ui celled table">
@@ -70,50 +79,72 @@
                         <!-- Campo Nombre -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" required>
+                            <input type="text" class="form-control" name="nombre" required value="{{ old('nombre') }}">
+                            @error('nombre')
+                             <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
+
 
                         <!-- Campo Móvil -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Móvil</label>
-                            <input type="tel" class="form-control" name="movil" required>
+                            <input type="tel" class="form-control" name="movil" required value="{{ old('movil') }}">
+                            @error('movil')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Campo Email -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" required>
+                            <input type="email" class="form-control" name="email" required value="{{ old('email') }}">
+                            @error('email')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Campo Password -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" class="form-control" name="password" required value="{{ old('password') }}">
+                            @error('password')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Campo Rol (CORREGIDO) -->
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Rol</label>
-                            <input type="rol" class="form-control" name="rol" required>
+                            <select name="rol" required>
+                                <option value="admin">Administrador</option>
+                                <option value="vendedor">Vendedor</option>
+                            </select>
+                            @error('rol')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Campo Estado -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Estado</label>
-                           <input type="estado" class="form-control" name="estado" required>
+                           <input type="estado" class="form-control" name="estado" required value="{{ old('estado') }}">
+                           @error('estado')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Campo Ciudad ID -->
                         <div class = "col-md-6 mb-3">
                             <label class="form-label">Ciudad ID</label>
-                            <select name = "ciudad_id" class = "form- control" required>
+                            <select name = "ciudad_id" class = "form- control" required value="´{{ old('ciudad_id') }}">
                                 <option value = "">Selecionar Ciudad:</option>
                                 @foreach($ciudades as $ciudad)
                                 <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
                                 @endforeach
-
                             </select>
-                            
+                            @error('ciudad_id')
+                                <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </form>

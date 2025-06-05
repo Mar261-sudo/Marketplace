@@ -1,5 +1,28 @@
 @extends('layout')
+@section('styles')
+<link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
 
+  <style>
+    
+
+
+    .error{
+      color: red;
+      font-size: 0.875em;
+      margin-top: 10px;
+    }
+    
+    .img-category{
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 50px;
+      border: 1px solid #ddd;
+      box-shadow: 5px 5px 5px;
+    }
+
+  </style>
+@stop
 
 @section('header')
    <div class="col">
@@ -46,7 +69,16 @@
                 <td>{{$productos->slug}}</td>
                 <td>{{$productos->descripcion}}</td>              
                 <td>{{$productos->valor}}</td>
-                <td>{{$productos->imagen}}</td>
+                <td> 
+                  @if ($productos->imagen)
+                  <a href="{{ url('img/Productos/' . $productos->imagen) }}" data-lightbox="{{ $productos->nombre }}" data-title="{{ $productos->nombre }}">
+                    <img src="{{ url('img/Productos/' . $productos->imagen) }}" class="img-category">
+                  </a>
+                @else
+                  <img src="{{ url('img/Productos/defecto.png') }}" class="img-category">
+                @endif
+
+                </td>
                 <td>{{$productos->estado_producto}}</td>
                 <td>{{$productos->categoria_id}}</td>
                 <td>{{$productos->usuario_id}}</td>
@@ -73,25 +105,37 @@
 
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" autofocus >
+              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value="{{ old ('nombre') }}">
+               @error('nombre')
+                    <div class="error">{{ $message }}</div>
+               @enderror
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Slug</label>
-                  <input type="text"class = "form-control" name ="slug" id="slug">
+                  <input type="text"class = "form-control" name ="slug" id="slug" required values="{{ old('slug') }}">
+                  @error('slug')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Valor</label>
-                  <input type="text"class = "form-control" name ="valor" id="valor">
+                  <input type="text"class = "form-control" name ="valor" id="valor"required value="{{ old('valor')}}">
+                  @error('valor')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md-6">
                 <div>
                   <label class ="form-label">Imagen</label>
                   <input type="file"class ="form-control" name ="imagen" accept="image/*">
+                 @error('imagen')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
@@ -103,6 +147,9 @@
                     <option value= "poco uso"> Poco uso</option>
                     <option value= "usado"> Usado</option>
                   </select>
+                   @error('estado_producto')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md-6 mb-3">
@@ -112,6 +159,9 @@
                     <option value= "1"> Activo</option>
                     <option value= "0"> Inactivo</option>
                   </select>
+                   @error('estado')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               
@@ -122,7 +172,10 @@
                   @foreach($categoria as $categoria)
                       <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                   @endforeach
-              </select>                 
+              </select>      
+               @error('categoria_id')
+                    <div class="error">{{ $message }}</div>
+                  @enderror           
               </div>
               <div class = "col-md-6 mb-3">
                <label class="form-label">Usuario</label>
@@ -132,6 +185,9 @@
                         <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
                     @endforeach
               </select>
+               @error('usuario_id')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
               </div>
               <div class = "col-md-6 mb-3">
                <label class="form-label">Ciudad</label>
@@ -141,15 +197,20 @@
                       <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
                   @endforeach
                 </select>
+                 @error('ciudad_id')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
 
-              </select>
               </div>
 
 
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" rows="3" name = "descripcion"></textarea>
+                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion') }}</textarea>
+                 @error('descripcion')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -170,8 +231,10 @@
 @stop
 
 @section('scripts')
-<script>
-  document.getElementById('nombre').addEventListener('input', function() {
+
+    <script src="{{ url('js/lightbox.min') }}"></script>
+  <script>
+  document.getElementById('nombre').addEventListener('input', function(e) {
     const nombre = this.value;
     const slug = generarSlug(nombre);
     document.getElementById('slug').value = slug;

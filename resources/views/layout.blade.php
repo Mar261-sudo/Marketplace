@@ -20,6 +20,8 @@
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
+
+    @yield('styles')
   </head>
   <body >
     <script src="./dist/js/demo-theme.min.js?1692870487"></script>

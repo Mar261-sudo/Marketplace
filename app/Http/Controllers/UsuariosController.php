@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Ciudad;
+use Validator;
 
 class UsuariosController extends Controller
 
@@ -34,7 +35,21 @@ class UsuariosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {       
+        $validator = Validator::make($request->all(),[
+
+            'nombre' => 'required|string|max:255|unique:usuarios',
+            'movil' => 'required|string|max:255|unique:usuarios',
+            'email' => 'required|string|max:255|unique:usuarios',
+            'password' => 'required|min:6',
+            'rol' => 'required|in :admin, vendedor',
+            'estado' => 'required|boolean',
+            'ciudad_id' => 'required|exists:ciudades,id',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
         $usuarios = new Usuario();
         
         $usuarios->nombre = $request->nombre;

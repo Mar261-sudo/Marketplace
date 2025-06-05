@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 
 use App\Models\Ciudad;
-
+use Validator;
 class CiudadesController extends Controller
 {
     /**
@@ -31,8 +31,20 @@ class CiudadesController extends Controller
      */
     public function store(Request $request)
     {
+            $validator = Validator::make($request->all(),[
+
+                'nombre' => 'required| max: 255|unique :ciudades',
+                'estado'  =>'required',
+            ]);
+
+            if($validator -> fails()){
+
+             return back()->withErrors($validator)->withInput();
+
+            }
+
+
         $ciudades = new Ciudad();
-        
         $ciudades->nombre = $request->nombre;
         $ciudades->estado = $request->estado;
         

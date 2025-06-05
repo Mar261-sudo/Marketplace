@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Categoria;
+use Validator;
 
 class CategoriaController extends Controller
 {
@@ -29,12 +30,36 @@ class CategoriaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $categoria = new Categoria();
+    {       
+        $validator = Validator::make($request-> all(),[
+
+            'nombre' => 'required| max: 255|unique:categorias',
+            'slug' => 'required|unique:categorias',
+            'descripcion' => 'nullable| max: 255',
+            'imagen' => 'nullable|image',
+        ]); 
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
         
+        $categoria = new Categoria();
         $categoria->nombre = $request->nombre;
         $categoria->slug = $request->slug;
         $categoria->descripcion = $request->descripcion;
+
+
+        if($request->hasFile('imagen')){
+            $file = $request -> file('imagen');
+            $filename = time() . '.'. $file ->getClientOriginalExtension();
+            $file -> move(public_path('img/Categorias'), $filename);
+            $categoria ->imagen = $filename;
+        }else{
+            $categoria-> imagen = null;
+
+        }
+
+
         $categoria->save();
 
      return redirect('categorias');

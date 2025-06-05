@@ -1,6 +1,14 @@
 @extends('layout')
 
-
+@section('styles')
+    <style>
+      .error{
+        color : red;
+        font-size: 0.875em;
+        margin-top: 10px;
+      }
+    </style>
+@stop
 
 @section('header')
    <div class="col">
@@ -61,13 +69,23 @@
 
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Palmira" autofocus >
+              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Palmira" required autofocus value ="{{ old('nombre')}}" >
+               @error('nombre')
+                <div class = "error" >{{ $message }}</div>
+              @enderror
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Estado</label>
-                  <input type="text"class = "form-control" name ="estado">
+                  <select name="estado" class ="form-control">
+                    <option value="">Selecciona Estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactiva</option>
+                  </select>
+                @error('estado')
+                <div class = "error">{{ $message }}</div>
+                @enderror
                 </div>
               </div>
             </div>

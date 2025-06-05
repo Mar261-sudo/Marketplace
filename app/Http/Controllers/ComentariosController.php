@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Comentario;
 use App\Models\Producto;
 use App\Models\Usuario;
+use Validator;
 class ComentariosController extends Controller
 {
     /**
@@ -34,7 +35,19 @@ class ComentariosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {           
+        $validator = Validator::make($request->all(),[
+
+            'descripcion' => 'required|max : 255',
+            'valoracion' => 'required|max:11',
+            'estado' => 'required|boolean',
+            'usuario_id' => 'required|exists:usuarios,id',
+            'producto_id' => 'required|exists:productos,id',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $comentarios = new Comentario();
         
         $comentarios->descripcion = $request->descripcion;

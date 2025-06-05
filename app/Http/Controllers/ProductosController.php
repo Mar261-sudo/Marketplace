@@ -8,6 +8,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Ciudad;
 use App\Models\Usuario;
+use Validator;
 
 class ProductosController extends Controller
 {
@@ -37,8 +38,23 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        $productos = new Producto();
-        
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|string|max:255|unique:productos',
+            'slug' => 'required|string|max:255|unique:productos,slug',
+            'descripcion' => 'nullable|string|max:255',
+            'valor' => 'required|numeric|min:0|max:99999999.99',
+            'imagen' => 'nullable|image',
+            'estado' => 'required|boolean',
+            'estado_producto' => 'required|in:nuevo,poco uso,usado',
+            'categoria_id' => 'required|exists:categorias,id',
+            'usuario_id' => 'required|exists:usuarios,id',
+            'ciudad_id' => 'required|exists:ciudades,id',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+     $productos = new Producto();     
         $productos->nombre = $request->nombre;
         $productos->slug = $request->slug;
         $productos->descripcion = $request->descripcion;
@@ -49,6 +65,24 @@ class ProductosController extends Controller
         $productos->categoria_id = $request->categoria_id;
         $productos->usuario_id = $request->usuario_id;
         $productos->ciudad_id = $request->ciudad_id;
+
+
+
+
+
+        
+        if($request->hasFile('imagen')){
+            $file = $request -> file('imagen');
+            $filename = time() . '.'. $file ->getClientOriginalExtension();
+            $file -> move(public_path('img/Productos'), $filename);
+            $productos ->imagen = $filename;
+        }else{
+            $productos-> imagen = null;
+
+        }
+
+
+
         $productos->save();
 
      return redirect('productos');

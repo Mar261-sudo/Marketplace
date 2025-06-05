@@ -1,4 +1,27 @@
 @extends('layout')
+
+
+@section('styles')
+  <style>
+    .error{
+      color : red;
+      font-size: 0.875em;
+      margin-top: 10px;
+    }
+
+    .img-category{
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 50px;
+      border: 1px solid #ddd;
+      box-shadow: 5px 5px 5px;
+    }
+  </style>
+@stop
+
+
+
 @section('header')
    <div class="col">
                 <h2 class="page-title">
@@ -26,6 +49,7 @@
     <table class ="ui celled table">
           <thead>
             <tr>
+              <th scope ="col">Imagen</th>
               <th scope ="col">Nombre</th>
               <th scope = "col">Url</th>
               <th scope ="col">Estado</th>
@@ -35,6 +59,13 @@
         <tbody>
           @foreach ($data as $categoria)
               <tr>
+                <td> 
+                  @if ($categoria ->imagen)
+                   <img src="{{url( 'img/Categorias/' . $categoria->imagen) }}"class = "img-category">
+                 @else
+                  <img src="{{ url('img/Categorias/predeterminada.png') }}" class="img-category">
+                  @endif
+                </td>
                 <td>{{$categoria ->nombre}}</td>
                 <td>{{$categoria ->slug}}</td>
                 <td>{{$categoria ->estado}}</td>
@@ -42,8 +73,7 @@
             </tr>
           @endforeach
         </tbody></table>
-      
-    </body></html>
+      </body></html>
 @stop
 
 
@@ -63,13 +93,19 @@
 
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" autofocus >
+              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value ="{{ old('nombre') }}">
+              @error('nombre')
+                <div class = "error" >{{ $message }}</div>
+              @enderror
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Slug</label>
-                  <input type="text"class = "form-control" name ="slug" id="slug">
+                  <input type="text"class = "form-control" name ="slug" id="slug" required value ="{{ old('slug')}}">
+                   @error('slug')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
@@ -77,13 +113,19 @@
                 <div>
                   <label class ="form-label">Imagen</label>
                   <input type="file"class ="form-control" name ="imagen" accept="image/*">
+                   @error('imagen')
+                    <div class = "error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" rows="3" name = "descripcion"></textarea>
+                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion')}}</textarea>
+                   @error('descripcion')
+                    <div class = "error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
             </div>

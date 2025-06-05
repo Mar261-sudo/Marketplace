@@ -1,6 +1,14 @@
 @extends('layout')
 
-
+@section('styles')
+  <style>
+    .error{
+      color: red;
+      font-size: 0.875em;
+      margin-top: 10px;
+    }
+  </style>
+@stop
 
 @section('header')
    <div class="col">
@@ -68,39 +76,54 @@
               <div class="col-lg-12 mb-3">
                 <div>
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" rows="3" name="descripcion" required></textarea>
+                  <textarea class="form-control" rows="3" name="descripcion" required>{{ old('descripcion') }}</textarea>
+                   @error('descripcion')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <div>
                   <label class="form-label">Valoración</label>
-                  <input type="number" class="form-control" name="valoracion" min="1" max="5" required>
+                  <input type="number" class="form-control" name="valoracion" min="1" max="5" required value="{{ old('valoracion') }}">
+                   @error('valoracion')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
               <div class="col-md-6 mb-3">
                 <div>
                   <label class="form-label">Estado</label>
-                  <select class="form-select" name="estado" required>
+                  <select class="form-select" name="estado" required value="{{ old('estado') }}">
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
+                 @error('estado')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
 
                 </div>
               </div>
-              <select class="form-select" name="usuario_id" required>
+              <select class="form-select" name="usuario_id" required value="{{ old('usuario_id') }}">
                 <option value="">Seleccionar Usuario</option>
                 @foreach($usuario as $u)
                     <option value="{{ $u->id }}">{{ $u->nombre }}</option>
                 @endforeach
+                 @error('usuario_id')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
             </select>
 
-            <select class="form-select" name="producto_id" required>
+            <select class="form-select" name="producto_id" required value="{{ old('producto_id')}}">
                 <option value="">Seleccionar Producto</option>
                 @foreach($producto as $p)
                     <option value="{{ $p->id }}">{{ $p->nombre }}</option>
                 @endforeach
+                 @error('producto_id')
+                    <div class="error">{{ $message }}</div>
+                  @enderror
             </select>
 
           </form>
