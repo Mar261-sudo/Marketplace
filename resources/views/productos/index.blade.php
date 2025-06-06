@@ -1,7 +1,7 @@
 @extends('layout')
 @section('styles')
 
-<link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
+  <link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
 
   <style>
     
@@ -71,7 +71,7 @@
                 <td>{{$productos->descripcion}}</td>              
                 <td>{{$productos->valor}}</td>
                 <td> 
-                  @if ($productos->imagen)
+                @if ($productos->imagen)
                   <a href="{{ url('img/Productos/' . $productos->imagen) }}" data-lightbox="{{ $productos->nombre }}" data-title="{{ $productos->nombre }}">
                     <img src="{{ url('img/Productos/' . $productos->imagen) }}" class="img-category">
                   </a>
@@ -234,6 +234,7 @@
 @section('scripts')
 
     <script src="{{ url('js/lightbox.min') }}"></script>
+    
   <script>
   document.getElementById('nombre').addEventListener('input', function(e) {
     const nombre = this.value;

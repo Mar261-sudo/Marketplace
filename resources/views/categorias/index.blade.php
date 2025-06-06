@@ -2,7 +2,7 @@
 
 
 @section('styles')
-  <link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
+<link rel="stylesheet" href="{{ url('css/lightbox.min') }}">
 
   <style>
     .error{
@@ -55,7 +55,6 @@
               <th scope ="col">Nombre</th>
               <th scope = "col">Url</th>
               <th scope ="col">Estado</th>
-              <th scope ="col">Acciones</th>
             </tr>
         </thead>  
         <tbody>
@@ -71,7 +70,9 @@
                 <td>{{$categoria ->nombre}}</td>
                 <td>{{$categoria ->slug}}</td>
                 <td>{{$categoria ->estado}}</td>
-                <td>{{$categoria ->acciones}}</td>
+                <td>
+                  <a href="{{url('categorias/'. $categoria->id . '/edit')}}" class= "btn-btn">Editar</a>
+                </td>
             </tr>
           @endforeach
         </tbody></table>
@@ -147,16 +148,18 @@
     </div>
 @stop
 
+
+
 @section('scripts')
     <script src="{{ url('js/lightbox.min') }}"></script>
-<script>
-  document.getElementById('nombre').addEventListener('input', function() {
+    <script>
+    document.getElementById('nombre').addEventListener('input', function() {
     const nombre = this.value;
     const slug = generarSlug(nombre);
     document.getElementById('slug').value = slug;
-  });
+    });
 
-  function generarSlug(text) {
+    function generarSlug(text) {
     return text
       .toString() // Convertir a string
       .toLowerCase() // Convertir a minúsculas
@@ -164,6 +167,6 @@
       .replace(/\s+/g, '-') // Reemplazar espacios con guiones
       .replace(/[^\w\-]+/g, '') // Eliminar caracteres no alfanuméricos
       .replace(/\-\-+/g, '-'); // Reemplazar múltiples guiones con uno solo
-  }
+    }
 </script>
 @stop

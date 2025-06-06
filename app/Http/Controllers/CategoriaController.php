@@ -52,11 +52,10 @@ class CategoriaController extends Controller
         if($request->hasFile('imagen')){
             $file = $request -> file('imagen');
             $filename = time() . '.'. $file ->getClientOriginalExtension();
-            $file -> move(public_path('img/Categorias'), $filename);
+            $file -> move(public_path('img/Categorias/'), $filename);
             $categoria ->imagen = $filename;
         }else{
             $categoria-> imagen = null;
-
         }
 
 
@@ -78,7 +77,9 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categoria = Categoria:: find($id);
+        dd($categoria ->toArray());
+        return view('categoria.edit');
     }
 
     /**
