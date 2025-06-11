@@ -83,6 +83,7 @@
                     <option value="1">Activo</option>
                     <option value="0">Inactiva</option>
                   </select>
+                  
                 @error('estado')
                 <div class = "error">{{ $message }}</div>
                 @enderror

@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Marketplace</title>
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
-    <link href="./dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-    <link href="./dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
-    <link href="./dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <link href="{{url('dist/css/tabler.min.css')}}" rel="stylesheet"/>
+    <link href="{{url('dist/css/tabler-flags.min.css')}}" rel="stylesheet"/>
+    <link href="{{url('dist/css/tabler-payments.min.css')}}" rel="stylesheet"/>
+    <link href="{{url('dist/css/tabler-vendors.min.css')}}" rel="stylesheet"/>
+    <link href="{{url('dist/css/demo.min.css')}}" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -24,7 +24,7 @@
     @yield('styles')
   </head>
   <body >
-    <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+    <script src="{{url('dist/js/demo-theme.min.js')}}"></script>
     <div class="page">
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none"  data-bs-theme="dark">
@@ -158,11 +158,11 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
                 <a href="#" class="dropdown-item">Status</a>
-                <a href="./profile.html" class="dropdown-item">Profile</a>
+                <a href="{{url('profile.html')}}" class="dropdown-item">Profile</a>
                 <a href="#" class="dropdown-item">Feedback</a>
                 <div class="dropdown-divider"></div>
-                <a href="./settings.html" class="dropdown-item">Settings</a>
-                <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                <a href="{{url('settings.html')}}" class="dropdown-item">Settings</a>
+                <a href="{{url('sign-in.html')}}" class="dropdown-item">Logout</a>
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@
             <div class="container-xl">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="./" >
+                  <a class="nav-link" href="{{ url('/') }}" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
 <!--
 category: Buildings
@@ -223,10 +223,10 @@ version: "1.88"
                     <div class="dropdown-menu-columns">
                       <div class="dropdown-menu-column">
                         <a class="dropdown-item" href="{{ url ('categorias')}}">Categorias</a>
-                       <a class="dropdown-item" href="{{ url ('ciudades')}}">Ciudades</a>
-	  					<a class="dropdown-item" href="{{ url ('productos')}}">Productos</a>
-						<a class="dropdown-item" href="{{ url ('comentarios')}}">Comentarios</a>
-						<a class="dropdown-item" href="{{ url ('usuarios')}}">Usuarios</a>
+                        <a class="dropdown-item" href="{{ url ('ciudades')}}">Ciudades</a>
+	  					          <a class="dropdown-item" href="{{ url ('productos')}}">Productos</a>
+                        <a class="dropdown-item" href="{{ url ('comentarios')}}">Comentarios</a>
+                        <a class="dropdown-item" href="{{ url ('usuarios')}}">Usuarios</a>
                       </div>
                     </div>
                   </div>
@@ -276,7 +276,7 @@ version: "1.88"
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary" rel="noopener">Documentation</a></li>
-                  <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
+                  <li class="list-inline-item"><a href="{{url('license.html')}}" class="link-secondary">License</a></li>
                   <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
                   <li class="list-inline-item">
                     <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
@@ -295,7 +295,7 @@ version: "1.88"
                     All rights reserved.
                   </li>
                   <li class="list-inline-item">
-                    <a href="./changelog.html" class="link-secondary" rel="noopener">
+                    <a href="{{url('changelog.html')}}" class="link-secondary" rel="noopener">
                       v1.0.0-beta20
                     </a>
                   </li>
@@ -308,13 +308,13 @@ version: "1.88"
     </div>
 	  @yield('modals')
     <!-- Libs JS -->
-    <script src="./dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-    <script src="./dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+    <script src= "{{url('dist/libs/apexcharts/dist/apexcharts.min.js')}}" defer></script>
+    <script src= "{{url('dist/libs/jsvectormap/dist/js/jsvectormap.min.js')}}" defer></script>
+    <script src= "{{url('dist/libs/jsvectormap/dist/maps/world.js')}}" defer></script>
+    <script src= "{{url('dist/libs/jsvectormap/dist/maps/world-merc.js')}}" defer></script>
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1692870487" defer></script>
-    <script src="./dist/js/demo.min.js?1692870487" defer></script>
+    <script src= "{{url('dist/js/tabler.min.js')}}" defer></script>
+    <script ssrc= "{{url('dist/js/demo.min.js')}}" defer></script>
 	 @yield('scripts')
   </body>
 </html>

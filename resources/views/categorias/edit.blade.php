@@ -27,7 +27,7 @@
 @section('header')
    <div class="col">
                 <h2 class="page-title">
-               Categorias
+               Editar
                </h2>
               </div>
               <!-- Page title actions -->
@@ -44,71 +44,23 @@
                     Nuevo
                   </a>
                 </div>
-              </div>
+      </div>
 @stop
 
-@section('content')
-    <table class ="ui celled table">
-          <thead>
-            <tr>
-              <th scope ="col">Imagen</th>
-              <th scope ="col">Nombre</th>
-              <th scope = "col">Url</th>
-              <th scope ="col">Estado</th>
-              <th scope ="col">Editar</th>
-              <th scope ="col">Eliminar</th>
 
-            </tr>
-        </thead>  
-        <tbody>
-          @foreach ($data as $categoria)
-              <tr>
-                <td> 
-                  @if ($categoria ->imagen)
-                   <img src="{{url( 'img/Categorias/' . $categoria->imagen) }}"class = "img-category">
-                 @else
-                  <img src="{{ url('img/Categorias/predeterminada.png') }}" class="img-category">
-                  @endif
-                </td>
-                <td>{{$categoria ->nombre}}</td>
-                <td>{{$categoria ->slug}}</td>
-                <td>{{$categoria ->estado}}</td>
-                <td>
-                  <a href="{{url('categorias/'. $categoria->id . '/edit')}}" class= "btn-btn">Editar</a>
-
-                </td>
-                <td>
-                  <form action="{{route('categorias.destroy',$categoria->id)}}" method = "POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type ="submit" class = "btn btn-danger" onclick = "return confirm('borrar?')"> Eliminar</button>
-                  </form></td>
-            </tr>
-          @endforeach
-        </tbody></table>
-      </body></html>
-@stop
 
 
 @section('modals')
+  
+ <div class="modal-body">
 
-  <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Nueva Categoria</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-
-          <form id = "categoria-form" action= "{{ url('categorias') }}" method ="POST" enctype ="multipart/form-data">
+          <form id = "categoria-form" action="{{ route ('categorias.update',['categoria' => $categoria->id]) }}" method ="POST" enctype ="multipart/form-data">
 
             @csrf
-          
+           @method('PUT')
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value ="{{ old('nombre') }}">
+              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value ="{{ old('nombre', $categoria->nombre)}}">
               @error('nombre')
                 <div class = "error" >{{ $message }}</div>
               @enderror
@@ -117,7 +69,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Slug</label>
-                  <input type="text"class = "form-control" name ="slug" id="slug" required value ="{{ old('slug')}}">
+                  <input type="text"class = "form-control" name ="slug" id="slug" required value ="{{ old('slug', $categoria->slug)}}">
                    @error('slug')
                     <div class="error">{{ $message }}</div>
                   @enderror
@@ -128,7 +80,14 @@
                 <div>
                   <label class ="form-label">Imagen</label>
                   <input type="file"class ="form-control" name ="imagen" accept="image/*">
-                   @error('imagen')
+                  <!-- RECUERDE LA IMAGEN -->
+                  @if($categoria->imagen)
+                    <img src="{{url('img/categorias/'.$categoria->imagen)}}">
+                    @else
+                    <img src="{{url('img/categorias/'.$categoria->predetermida)}}">
+                  @endif
+
+                  @error('imagen')
                     <div class = "error">{{ $message }}</div>
                   @enderror
                 </div>
@@ -137,7 +96,7 @@
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion')}}</textarea>
+                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion' , $categoria->descripcion)}}</textarea>
                    @error('descripcion')
                     <div class = "error">{{ $message }}</div>
                   @enderror
@@ -148,16 +107,13 @@
             
           </div>
           <div class="modal-footer">
-            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-              Cancelar
-            </a>
+              <a href="{{ url('categorias') }}" class="btn btn-link link-secondary">
+                 Cancelar
+              </a>
             <button type ="submit" class= "btn btn-primary ms-auto" id= "btn-modal" form="categoria-form"> 
               Enviar
             </button>
           </div>
-        </div>
-      </div>
-    </div>
 @stop
 
 

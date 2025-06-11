@@ -77,9 +77,9 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        $categoria = Categoria:: find($id);
-        dd($categoria ->toArray());
-        return view('categoria.edit');
+        $categoria = Categoria:: findOrFail($id);
+        // dd($categoria ->toArray());
+        return view('categorias.edit', compact('categoria'));
     }
 
     /**
@@ -87,7 +87,32 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $validator = Validator::make($request-> all(),[
+
+            'nombre' => 'required| max: 255|unique:categorias,nombre,'. $id,
+            'slug' => 'required|unique:categorias,slug,'. $id,
+            'descripcion' => 'nullable| max: 255',
+            'imagen' => 'nullable|image',
+        ]); 
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $categoria = Categoria::findOrFail($id);
+        $categoria->nombre = $request->nombre;
+        $categoria->slug = $request->slug;
+        $categoria->descripcion = $request->descripcion;
+        
+        if($request->hasFile('imagen')){
+            $file = $request->file('imagen');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('img/categorias'), $filename);
+            
+            $categoria->imagen = $file;
+        }
+        $categoria->save();
+        return redirect('categorias')->with('message', 'se edito');
+
     }
 
     /**
