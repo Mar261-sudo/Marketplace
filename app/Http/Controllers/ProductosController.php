@@ -101,7 +101,13 @@ class ProductosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       $productos = Producto :: findOrFail($id);
+        $categoria = Categoria::all();
+        $ciudad = Ciudad::all();
+        $usuario = usuario::all();
+    
+       return view('productos.edit', compact('productos','categoria','ciudad','usuario'));
+       
     }
 
     /**

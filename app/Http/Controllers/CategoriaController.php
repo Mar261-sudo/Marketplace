@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Categoria;
+use App\Models\Producto;
+
 use Validator;
 
 class CategoriaController extends Controller
@@ -46,13 +48,14 @@ class CategoriaController extends Controller
         $categoria = new Categoria();
         $categoria->nombre = $request->nombre;
         $categoria->slug = $request->slug;
+        $categoria ->imagen = $request-> imagen;
         $categoria->descripcion = $request->descripcion;
 
 
         if($request->hasFile('imagen')){
             $file = $request -> file('imagen');
             $filename = time() . '.'. $file ->getClientOriginalExtension();
-            $file -> move(public_path('img/Categorias/'), $filename);
+            $file -> move(public_path('img/Categorias'), $filename);
             $categoria ->imagen = $filename;
         }else{
             $categoria-> imagen = null;
@@ -60,8 +63,9 @@ class CategoriaController extends Controller
 
 
         $categoria->save();
-
-     return redirect('categorias');
+        return redirect('categorias')
+                   ->with('message','se creo exitosamente')
+                   -> with('type','succes');                                
     }
 
     /**
@@ -101,25 +105,43 @@ class CategoriaController extends Controller
         $categoria = Categoria::findOrFail($id);
         $categoria->nombre = $request->nombre;
         $categoria->slug = $request->slug;
+        $categoria ->imagen = $request-> imagen;
+
         $categoria->descripcion = $request->descripcion;
         
         if($request->hasFile('imagen')){
             $file = $request->file('imagen');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('img/categorias'), $filename);
+            $file->move(public_path('img/Categorias'), $filename);
             
-            $categoria->imagen = $file;
-        }
-        $categoria->save();
-        return redirect('categorias')->with('message', 'se edito');
+            $categoria->imagen = $filename;
+        }else {
+             $categoria-> imagen = null;
 
+        }
+         $categoria->save();
+        return redirect('categorias')
+                   ->with('message','categoria editada exitosamente')
+                   -> with('type','succes');   
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id){
+    
+      $categoria = Categoria::findOrFail($id);
+
+      if($categoria->productos()->count()> 0){
+        return redirect('categorias')
+                ->with('message','No se puede eliminar porque tiene productos')
+                ->with('type','danger');
+      }
+     $categoria->delete();
+     return redirect('categorias')
+          ->with('message','Se elimino exitosamente')
+          ->with('type','danger');
+
+
     }
 }

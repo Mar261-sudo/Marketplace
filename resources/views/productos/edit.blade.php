@@ -48,72 +48,13 @@
 @stop
 
 @section('content')
-    <table class ="ui celled table">
-          <thead>
-            <tr>
-              <th scope ="col">Nombre</th>
-              <th scope ="col">Slug</th>
-              <th scope ="col">Descripcion</th>
-              <th scope ="col">Valor</th>
-              <th scope ="col">Imagen</th>
-              <th scope ="col">Estado Producto</th>
-              <th scope ="col">Categoria ID</th>
-              <th scope ="col">Usuario ID</th>
-              <th scope ="col">Ciudad ID</th>
-              <th scope ="col">Editar</th>
-              <th scope ="col">Eliminar</th>
-            </tr>
-        </thead>  
-        <tbody>
-          @foreach ($data as $productos)
-              <tr>
-                <td>{{$productos ->nombre}}</td>
-                <td>{{$productos->slug}}</td>
-                <td>{{$productos->descripcion}}</td>              
-                <td>{{$productos->valor}}</td>
-                <td> 
-                @if ($productos->imagen)
-                  <a href="{{ url('img/Productos/' . $productos->imagen) }}" data-lightbox="{{ $productos->nombre }}" data-title="{{ $productos->nombre }}">
-                    <img src="{{ url('img/Productos/' . $productos->imagen) }}" class="img-category">
-                  </a>
-                @else
-                  <img src="{{ url('img/Productos/defecto.png') }}" class="img-category">
-                @endif
-
-                </td>
-                <td>{{$productos->estado_producto}}</td>
-                <td>{{$productos->categoria_id}}</td>
-                <td>{{$productos->usuario_id}}</td>
-                <td>{{$productos->ciudad_id}}</td>
-
-                <td>
-                  <a href="{{url('productos/'. $productos->id . '/edit')}}" class= "btn-btn">Editar</a>
-
-                </td>
-    
-              </tr>
-          @endforeach
-        </tbody></table>
-      
-    </body></html>
-@stop
-@section('modals')
-  <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Nuevo Producto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-          <form id = "producto-form" action= "{{ url('productos') }}" method ="POST" enctype ="multipart/form-data">
+<form id = "producto-form" action= "{{ url('productos') }}" method ="POST" enctype ="multipart/form-data">
 
             @csrf
 
             <div class="mb-3">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value="{{ old ('nombre') }}">
+              <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value="{{ old ('nombre' , $productos ->nombre)}}">
                @error('nombre')
                     <div class="error">{{ $message }}</div>
                @enderror
@@ -122,7 +63,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Slug</label>
-                  <input type="text"class = "form-control" name ="slug" id="slug" required values="{{ old('slug') }}">
+                  <input type="text"class = "form-control" name ="slug" id="slug" required values="{{ old('slug' , $productos ->slug) }}">
                   @error('slug')
                     <div class="error">{{ $message }}</div>
                   @enderror
@@ -131,7 +72,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Valor</label>
-                  <input type="text"class = "form-control" name ="valor" id="valor"required value="{{ old('valor')}}">
+                  <input type="text"class = "form-control" name ="valor" id="valor"required value="{{ old('valor' , $productos->valor)}}">
                   @error('valor')
                     <div class="error">{{ $message }}</div>
                   @enderror
@@ -150,7 +91,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Estado Producto</label>
-                  <select name = "estado_producto" class = "form-control">
+                  <select name = "estado_producto" class = "form-control" value ="{{old ('estado_producto', $productos->estado_producto)}}">
                     <option value= "nuevo"> Nuevo</option>
                     <option value= "poco uso"> Poco uso</option>
                     <option value= "usado"> Usado</option>
@@ -163,7 +104,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Estado</label>
-                  <select name = "estado" class = "form-control">
+                  <select name = "estado" class = "form-control" value ="{{old ('estado', $productos->estado)}}">
                     <option value= "1"> Activo</option>
                     <option value= "0"> Inactivo</option>
                   </select>
@@ -176,10 +117,12 @@
               <div class = "col-md-6 mb-3">
                <label class="form-label">Categorias</label>
                <select name="categoria_id" class="form-control">
-                  <option value="">Seleccionar Categoría</option>
                   @foreach($categoria as $categoria)
-                      <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                  @endforeach
+                      <option value="{{ $categoria->id }}"
+                        {{ old('categoria_id', $productos->categoria_id) == $categoria->id ? 'selected' : '' }}>
+                        {{ $categoria->nombre }}
+                        </option>
+                   @endforeach
               </select>      
                @error('categoria_id')
                     <div class="error">{{ $message }}</div>
@@ -188,9 +131,11 @@
               <div class = "col-md-6 mb-3">
                <label class="form-label">Usuario</label>
                <select name="usuario_id" class="form-control">
-                  <option value="">Seleccionar Usuario</option>
-                    @foreach($usuario as $usuario)
-                        <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                   @foreach($usuario as $usuario)
+                   <option value="{{$usuario->id}}"
+                   {{ old('usuario_id', $productos->usuario_id) == $usuario->id ? 'selected' : '' }}>
+                        {{ $usuario->nombre }}
+                        </option>
                     @endforeach
               </select>
                @error('usuario_id')
@@ -202,7 +147,7 @@
                <select name="ciudad_id" class="form-control">
                   <option value="">Seleccionar Ciudad</option>
                   @foreach($ciudad as $ciudad)
-                      <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
+                      <option value="{{ old('ciudad->id') }}"></option>
                   @endforeach
                 </select>
                  @error('ciudad_id')
@@ -215,7 +160,7 @@
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Descripción</label>
-                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion') }}</textarea>
+                  <textarea class="form-control" rows="3" name = "descripcion">{{ old('descripcion',$productos->descripcion) }}</textarea>
                  @error('descripcion')
                     <div class="error">{{ $message }}</div>
                   @enderror
@@ -234,8 +179,8 @@
             </button>
           </div>
         </div>
-      </div>
-    </div>
+    
+    </body></html>
 @stop
 
 @section('scripts')

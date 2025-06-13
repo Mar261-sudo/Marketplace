@@ -48,6 +48,12 @@
 @stop
 
 @section('content')
+    @if(session('message'))
+    <div class ="alert alert-{{ session('type')}}">
+      {{ session ('message')}}
+    </div>
+
+    @endif
     <table class ="ui celled table">
           <thead>
             <tr>

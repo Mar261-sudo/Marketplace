@@ -27,7 +27,7 @@
 @section('header')
    <div class="col">
                 <h2 class="page-title">
-               Editar
+               Editar Categoria
                </h2>
               </div>
               <!-- Page title actions -->
@@ -38,23 +38,17 @@
                       Productos
                     </a>
                   </span> -->
-                  <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                  <a href="{{url('categorias')}}" class="btn btn-primary d-none d-sm-inline-block">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Nuevo
+                    Volver
                   </a>
                 </div>
       </div>
 @stop
 
-
-
-
-@section('modals')
-  
- <div class="modal-body">
-
-          <form id = "categoria-form" action="{{ route ('categorias.update',['categoria' => $categoria->id]) }}" method ="POST" enctype ="multipart/form-data">
+@section('content')
+<form id = "categoria-form" action="{{ route ('categorias.update',['categoria' => $categoria->id]) }}" method ="POST" enctype ="multipart/form-data" class = "col md-6">
 
             @csrf
            @method('PUT')
@@ -76,15 +70,16 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-3">
+                
                 <div>
                   <label class ="form-label">Imagen</label>
                   <input type="file"class ="form-control" name ="imagen" accept="image/*">
                   <!-- RECUERDE LA IMAGEN -->
                   @if($categoria->imagen)
-                    <img src="{{url('img/categorias/'.$categoria->imagen)}}">
+                    <img src="{{url('img/Categorias/'.$categoria->imagen)}}" class="img-category" alt="{{$categoria->nombre}}">
                     @else
-                    <img src="{{url('img/categorias/'.$categoria->predetermida)}}">
+                    <img src="{{url('img/Categorias/'.$categoria->predetermida)}} "class="img-category" alt="{{$categoria->nombre}}">
                   @endif
 
                   @error('imagen')
@@ -115,6 +110,7 @@
             </button>
           </div>
 @stop
+
 
 
 
