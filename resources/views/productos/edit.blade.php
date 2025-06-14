@@ -38,20 +38,20 @@
                       Productos
                     </a>
                   </span> -->
-                  <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                  <a href="{{ url('productos') }}" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Nuevo
+                    Volver
                   </a>
                 </div>
               </div>
 @stop
 
 @section('content')
-<form id = "producto-form" action= "{{ url('productos') }}" method ="POST" enctype ="multipart/form-data">
+<form id = "producto-form" action="{{ route ('productos.update',['producto' => $productos->id]) }}" method ="POST" enctype ="multipart/form-data" class = "col md-6">
 
             @csrf
-
+            @method('PUT')  
             <div class="mb-3">
               <label class="form-label">Nombre</label>
               <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Top" required autofocus value="{{ old ('nombre' , $productos ->nombre)}}">
@@ -145,10 +145,13 @@
               <div class = "col-md-6 mb-3">
                <label class="form-label">Ciudad</label>
                <select name="ciudad_id" class="form-control">
-                  <option value="">Seleccionar Ciudad</option>
                   @foreach($ciudad as $ciudad)
-                      <option value="{{ old('ciudad->id') }}"></option>
+                      <option value="{{ $ciudad->id}}"
+                      {{ old('ciudad_id', $productos->ciudad_id) == $ciudad->id ? 'selected' : '' }}>
+                      {{ $ciudad->nombre }}
+                      </option>
                   @endforeach
+
                 </select>
                  @error('ciudad_id')
                     <div class="error">{{ $message }}</div>

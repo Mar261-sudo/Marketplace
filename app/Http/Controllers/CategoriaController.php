@@ -65,7 +65,7 @@ class CategoriaController extends Controller
         $categoria->save();
         return redirect('categorias')
                    ->with('message','se creo exitosamente')
-                   -> with('type','succes');                                
+                   -> with('type','success');                                
     }
 
     /**
@@ -122,7 +122,7 @@ class CategoriaController extends Controller
          $categoria->save();
         return redirect('categorias')
                    ->with('message','categoria editada exitosamente')
-                   -> with('type','succes');   
+                   -> with('type',' info');   
     }
 
     /**
