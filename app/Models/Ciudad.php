@@ -11,6 +11,12 @@ class Ciudad extends Model
         return $this->hasManys(usuario::class);
     }
     
+    public function productos()
+{
+    return $this->hasMany(\App\Models\Producto::class, 'ciudad_id');
+}
+
+
 
 
     protected $table = "ciudades";

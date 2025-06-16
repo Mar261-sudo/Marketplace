@@ -34,12 +34,18 @@
 @stop
 
 @section('content')
+ @if(session('message'))
+    <div class ="alert alert-{{ session('type')}}">
+      {{ session ('message')}}
+    </div>
+  @endif
     <table class ="ui celled table">
           <thead>
             <tr>
               <th scope ="col">Nombre</th>
               <th scope ="col">Estado</th>
-              <th scope ="col">Acciones</th>
+              <th scope ="col">Editar</th>
+              <th scope="col">Eliminar</th>
             </tr>
         </thead>  
         <tbody>
@@ -47,6 +53,17 @@
               <tr>
                 <td>{{$ciudades ->nombre}}</td>
                 <td>{{$ciudades->estado}}</td>
+
+                 <td>
+                  <a href="{{url('ciudades/'. $ciudades->id . '/edit')}}" class= "btn-btn">Editar</a>
+
+                </td>
+                <td>
+                  <form action="{{route('ciudades.destroy',$ciudades->id)}}" method = "POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type ="submit" class = "btn btn-danger" onclick = "return confirm('borrar?')"> Eliminar</button>
+                  </form></td>
               </tr>
           @endforeach
         </tbody></table>

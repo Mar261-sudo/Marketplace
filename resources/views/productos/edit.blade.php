@@ -38,7 +38,7 @@
                       Productos
                     </a>
                   </span> -->
-                  <a href="{{ url('productos') }}" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+                  <a href="{{ url('productos') }}" class="btn btn-primary d-none d-sm-inline-block"  data-bs-target="#modal-report">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     Volver
@@ -63,7 +63,7 @@
               <div class="col-md-6 mb-3">
                 <div>
                   <label class ="form-label">Slug</label>
-                  <input type="text"class = "form-control" name ="slug" id="slug" required values="{{ old('slug' , $productos ->slug) }}">
+                  <input type="text"class = "form-control" name ="slug" id="slug" required value="{{ old('slug' , $productos ->slug) }}">
                   @error('slug')
                     <div class="error">{{ $message }}</div>
                   @enderror
@@ -78,12 +78,20 @@
                   @enderror
                 </div>
               </div>
-              <div class="col-md-6">
-                <div>
+               <div class="col-md-6 mb-3" >
+                
+               <div>
                   <label class ="form-label">Imagen</label>
                   <input type="file"class ="form-control" name ="imagen" accept="image/*">
-                 @error('imagen')
-                    <div class="error">{{ $message }}</div>
+                  <!-- RECUERDE LA IMAGEN -->
+                  @if($productos->imagen)
+                    <img src="{{url('img/Productos/'.$productos->imagen)}}" class="img-category" alt="{{$productos->nombre}}">
+                    @else
+                    <img src="{{url('img/Productos/'.$productos->defecto)}} "class="img-category" alt="{{$productos->nombre}}">
+                  @endif
+
+                  @error('imagen')
+                    <div class = "error">{{ $message }}</div>
                   @enderror
                 </div>
               </div>
@@ -172,16 +180,14 @@
             </div>
           </form>
             
-          </div>
           <div class="modal-footer">
-            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            <a href="{{ url('productos') }}" class="btn btn-link link-secondary">
               Cancelar
             </a>
             <button type ="submit" class= "btn btn-primary ms-auto" id= "btn-modal" form="producto-form"> 
               Enviar
             </button>
           </div>
-        </div>
     
     </body></html>
 @stop

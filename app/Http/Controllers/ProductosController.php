@@ -115,7 +115,50 @@ class ProductosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|string|max:255|unique:productos,nombre,' . $id,
+            'slug' => 'required|string|max:255|unique:productos,slug,' . $id,
+            'descripcion' => 'nullable|string|max:255',
+            'valor' => 'required|numeric|min:0|max:99999999.99',
+            'imagen' => 'nullable|image',
+            'estado' => 'required|boolean',
+            'estado_producto' => 'required|in:nuevo,poco uso,usado',
+            'categoria_id' => 'required|exists:categorias,id',
+            'usuario_id' => 'required|exists:usuarios,id',
+            'ciudad_id' => 'required|exists:ciudades,id',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $productos = Producto::findOrFail($id);
+        $productos->nombre = $request->nombre;
+        $productos->slug = $request->slug;
+        $productos->descripcion = $request->descripcion;
+        $productos->valor = $request->valor;
+        $productos ->imagen = $request-> imagen;
+        $productos->estado = $request->estado;
+        $productos->estado_producto = $request->estado_producto;
+        $productos->categoria_id = $request->categoria_id;
+        $productos->usuario_id = $request->usuario_id;
+        $productos->ciudad_id = $request->ciudad_id;
+
+        if($request->hasFile('imagen')){
+            $file = $request -> file('imagen');
+            $filename = time() . '.'. $file ->getClientOriginalExtension();
+            $file -> move(public_path('img/Productos'), $filename);
+            $productos ->imagen = $filename;
+        }else{
+            $productos-> imagen = null;
+
+        }
+
+        $productos->save();
+
+     return redirect('productos')
+                ->with('message','producto editado exitosamente')
+                -> with('type',' info');
     }
 
     /**
@@ -123,6 +166,19 @@ class ProductosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $productos = Producto::findOrFail($id);
+
+        if($productos->usuario()->count() > 0){
+            return redirect('productos')
+                        ->with('message', 'No se puede eliminar el producto porque tiene usuarios asociadas.')
+                         ->with('type', 'danger');
+        }
+
+      
+        $productos->delete();
+
+        return redirect('productos')
+                ->with('message', 'Producto eliminado exitosamente')
+                ->with('type', 'success');
     }
 }

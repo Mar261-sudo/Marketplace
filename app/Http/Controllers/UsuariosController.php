@@ -77,7 +77,10 @@ class UsuariosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $ciudades = Ciudad::all();
+
+        return view('usuarios.edit', compact('usuario', 'ciudades'));
     }
 
     /**
@@ -85,14 +88,58 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|string|max:255|unique:usuarios,nombre,'.$id,
+            'movil' => 'required|string|max:255|unique:usuarios,movil,'.$id,
+            'email' => 'required|string|max:255|unique:usuarios,email,'.$id,
+            'password' => 'nullable|min:6',
+            'rol' => 'required|in:admin,vendedor',
+            'estado' => 'required|boolean',
+            'ciudad_id' => 'required|exists:ciudades,id',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $usuario = Usuario::findOrFail($id);
+        
+        $usuario->nombre = $request->nombre;
+        $usuario->movil = $request->movil;
+        $usuario->email = $request->email;
+        if ($request->filled('password')) {
+            $usuario->password = bcrypt($request->password);
+        }
+        $usuario->rol = $request->rol;
+        $usuario->estado = $request->estado;
+        $usuario->ciudad_id = $request->ciudad_id;
+        $usuario->save();
+
+        return redirect('usuarios')
+            ->with('message', 'Usuario actualizado correctamente.')
+            ->with('type', 'success');
+            
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        //
+{
+    $usuario = Usuario::findOrFail($id);
+
+    // Verificar si el usuario tiene productos asociados
+    if ($usuario->productos()->count() > 0) {
+        return redirect('usuarios')
+            ->with('message', 'No se puede eliminar el usuario porque tiene productos asignados.')
+            ->with('type', 'danger');
     }
+
+    // Si no tiene productos, se elimina
+    $usuario->delete();
+
+    return redirect('usuarios')
+        ->with('message', 'Usuario eliminado correctamente.')
+        ->with('type', 'success');
+}
 }

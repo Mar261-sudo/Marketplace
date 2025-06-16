@@ -10,7 +10,7 @@ class Producto extends Model
     public function categoria(){
         return $this->belongsTo( categoria:: class);
     }
-
+        
     public function ciudad(){
         return $this->belongsTo( ciudad:: class);
     }

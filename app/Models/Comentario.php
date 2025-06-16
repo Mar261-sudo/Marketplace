@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comentario extends Model
 {
+    
         public function producto(){
                 return $this->belongsTo( producto:: class);
             }

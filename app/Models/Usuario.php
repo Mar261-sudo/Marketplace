@@ -9,7 +9,9 @@ class Usuario extends Model
     public function ciudad() {
         return $this->belongsTo(Ciudad::class);
     }
-
+    public function productos() {
+        return $this->hasMany(Producto::class);
+    }
 
 
     use HasFactory;

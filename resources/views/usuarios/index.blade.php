@@ -35,33 +35,55 @@
 
 
 @section('content')
-    <table class ="ui celled table">
-          <thead>
-            <tr>
-              <th scope ="col">Nombre</th>
-              <th scope ="col">Movil</th>
-              <th scope ="col">Email</th>
-              <th scope ="col">Password</th>
-              <th scope ="col">Rol</th>
-              <th scope ="col">Estado</th>
-              <th scope ="col">Ciudad ID</th>
-            </tr>
-        </thead>  
-        <tbody>
-          @foreach ($usuarios as $usuarios)
-              <tr>
-                <td>{{$usuarios ->nombre}}</td>
-                <td>{{$usuarios->movil}}</td>
-                <td>{{$usuarios->email}}</td>              
-                <td>{{$usuarios->password}}</td>
-                <td>{{$usuarios->rol}}</td>
-                <td>{{$usuarios->estado}}</td>
-                <td>{{$usuarios->ciudad_id}}</td>
-              </tr>
-          @endforeach
-        </tbody></table>
+@if(session('message'))
+    <div class ="alert alert-{{ session('type')}}">
+      {{ session ('message')}}
+    </div>
+  @endif
+
+   <div style="overflow-x: auto;">
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Movil</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Ciudad ID</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($usuarios as $usuarios)
+        <tr>
+          <td>{{ $usuarios->nombre }}</td>
+          <td>{{ $usuarios->movil }}</td>
+          <td>{{ $usuarios->email }}</td>
+          <td>{{ $usuarios->password }}</td>
+          <td>{{ $usuarios->rol }}</td>
+          <td>{{ $usuarios->estado }}</td>
+          <td>{{ $usuarios->ciudad_id }}</td>
+          <td>
+            <a href="{{ url('usuarios/' . $usuarios->id . '/edit') }}" class="btn-btn">Editar</a>
+          </td>
+          <td>
+            <form action="{{ route('usuarios.destroy', $usuarios->id) }}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger" onclick="return confirm('borrar?')">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
+
       
-    </body></html>
+    </body> </html>
 @stop
 @section('modals')
 <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
@@ -136,7 +158,7 @@
                         <!-- Campo Ciudad ID -->
                         <div class = "col-md-6 mb-3">
                             <label class="form-label">Ciudad ID</label>
-                            <select name = "ciudad_id" class = "form- control" required value="´{{ old('ciudad_id') }}">
+                            <select name = "ciudad_id" class = "form- control" required value="{{ old('ciudad_id') }}">
                                 <option value = "">Selecionar Ciudad:</option>
                                 @foreach($ciudades as $ciudad)
                                 <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>

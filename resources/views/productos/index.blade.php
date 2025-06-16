@@ -48,6 +48,11 @@
 @stop
 
 @section('content')
+ @if(session('message'))
+    <div class ="alert alert-{{ session('type')}}">
+      {{ session ('message')}}
+    </div>
+  @endif
     <table class ="ui celled table">
           <thead>
             <tr>
@@ -90,7 +95,13 @@
                   <a href="{{url('productos/'. $productos->id . '/edit')}}" class= "btn-btn">Editar</a>
 
                 </td>
-    
+                <td>
+                  <form action="{{ url('productos/' . $productos->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </td> 
               </tr>
           @endforeach
         </tbody></table>
