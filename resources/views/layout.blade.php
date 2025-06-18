@@ -162,7 +162,7 @@
                 <a href="#" class="dropdown-item">Feedback</a>
                 <div class="dropdown-divider"></div>
                 <a href="{{url('settings.html')}}" class="dropdown-item">Settings</a>
-                <a href="{{url('sign-in.html')}}" class="dropdown-item">Logout</a>
+                <a href="logout" class="dropdown-item">Logout</a>
               </div>
             </div>
           </div>

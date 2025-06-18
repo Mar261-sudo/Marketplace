@@ -7,11 +7,46 @@ use App\Http\Controllers\CiudadesController;
 use App\Http\Controllers\ComentariosController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\LoginController;
+
 
 
 Route::get('/', function () {
-    return view('layout');
+    if (Auth::check()) 
+        return redirect('/home');
+    
+    return view('login');
+})->name('login');
+
+Route::get('/login ', function () {
+    if (Auth::check()) 
+        return redirect('/home');
+    
+    return view('/login');
 });
+
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+
+Route::get('/terminos', function () {
+    return view('terminos');
+})->name('terminos');
+
+
+
+Route::post('/register', [LoginController::class,'register']);
+Route::post('/check', [LoginController::class,'check']);
+
+Route::middleware(['auth'])->group(function(){
+
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::get('/logout', [LoginController::class,'logout']);
 
 // Route::get('/categorias', [CategoriaController::class,'index']);
 Route:: resource('categorias', CategoriaController::class);
@@ -21,4 +56,4 @@ Route:: resource('comentarios', ComentariosController::class);
 Route:: resource('productos', ProductosController::class);
 Route:: resource('usuarios', UsuariosController::class);
 
-
+});
