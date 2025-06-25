@@ -8,7 +8,7 @@ use App\Http\Controllers\ComentariosController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\MarketController;
 
 
 Route::get('/', function () {
@@ -57,3 +57,12 @@ Route:: resource('productos', ProductosController::class);
 Route:: resource('usuarios', UsuariosController::class);
 
 });
+
+// rutas vistas
+
+Route::get('/market', function () {
+    return view('market.index');
+});
+
+Route::get('/market', [MarketController::class, 'index'])->name('market.index');
+
