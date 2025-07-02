@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Producto;
 
-
-
 class MarketController extends Controller
 {
     /**
@@ -26,8 +24,16 @@ class MarketController extends Controller
         return view('market.index', compact('categorias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-   
+
+    public function detalle($id)
+    {
+
+        $productos = Producto::where('id', $id)
+            ->where('estado', 1)
+            ->with(['categoria', 'usuario'])
+            ->firstOrFail();
+        
+        return view('market.detalle', compact('productos'));
+
+     }
 }

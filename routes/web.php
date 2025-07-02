@@ -64,5 +64,12 @@ Route::get('/market', function () {
     return view('market.index');
 });
 
+
+Route::get('/market', function () {
+    return view('market.detalle');
+});
+
+
 Route::get('/market', [MarketController::class, 'index'])->name('market.index');
 
+Route::get('/market/detalle/{id}', [MarketController::class, 'detalle'])->name('market.detalle');
