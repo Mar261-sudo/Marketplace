@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Authenticatable
 {
     public function ciudad() {
-        return $this->belongsTo(Ciudad::class);
+        return $this->belongsTo(Ciudad::class, 'ciudad_id');
     }
     public function productos() {
         return $this->hasMany(Producto::class);
