@@ -11,9 +11,12 @@ class Comentario extends Model
                 return $this->belongsTo( producto:: class);
             }
         
-            public function usuario(){
-                return $this->belongsTo( usuario:: class);
+            public function usuario(): mixed{
+                    return $this->belongsTo(\App\Models\Usuario::class, 'usuario_id');
+
             }
+
+
         protected $fillable =['decripcion','valoracion','estado','usuario_id','producto_id'];
 
 }

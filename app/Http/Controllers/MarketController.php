@@ -30,7 +30,7 @@ class MarketController extends Controller
 
         $productos = Producto::where('id', $id)
             ->where('estado', 1)
-            ->with(['categoria', 'usuario'])
+            ->with(['categoria', 'usuario','comentarios.usuario'])
             ->firstOrFail();
         
         return view('market.detalle', compact('productos'));

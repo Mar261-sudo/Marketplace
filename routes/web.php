@@ -73,3 +73,4 @@ Route::get('/market', function () {
 Route::get('/market', [MarketController::class, 'index'])->name('market.index');
 
 Route::get('/market/detalle/{id}', [MarketController::class, 'detalle'])->name('market.detalle');
+
